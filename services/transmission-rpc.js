@@ -48,7 +48,7 @@ var execute = function (body) {
       deffered.resolve(body);
     }
     else {
-      log.info('something too fishy | %j', res.headers);
+      log.info('something too fishy | %j', body.toString());
       deffered.reject({
         error: 'non-200 response code received from transmission rpc client',
         code: res.statusCode
