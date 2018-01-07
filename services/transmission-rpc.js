@@ -31,6 +31,7 @@ var execute = function (body) {
       return;
     }
     else if(res.statusCode === 409 && res.headers['X-Transmission-Session-Id']) {
+      log.info(res.headers);
       options.headers['X-Transmission-Session-Id'] = res.headers['X-Transmission-Session-Id'];
       request(options, function (err, res, body) {
         if(res.statusCode !== 200) {
