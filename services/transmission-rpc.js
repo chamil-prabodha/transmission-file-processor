@@ -50,6 +50,7 @@ var execute = function (body) {
       deffered.resolve(body);
     }
     else {
+      log.info(res.headers);
       deffered.reject({
         error: 'non-200 response code received from transmission rpc client',
         code: res.statusCode
