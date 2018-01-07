@@ -30,7 +30,7 @@ var execute = function (body) {
       });
       return;
     }
-    else if(res.statusCode === 401 && res.headers['X-Transmission-Session-Id']) {
+    else if(res.statusCode === 409 && res.headers['X-Transmission-Session-Id']) {
       options.headers['X-Transmission-Session-Id'] = res.headers['X-Transmission-Session-Id'];
       request(options, function (err, res, body) {
         if(res.statusCode !== 200) {
