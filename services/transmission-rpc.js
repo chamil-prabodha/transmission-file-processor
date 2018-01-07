@@ -6,6 +6,7 @@ var config = require('../config/appConfig.json');
 var request = require('request');
 var log = require('../logger');
 var util = require('../util/util');
+var parser = require('xml2json');
 var Q = require('q');
 
 const options = {
@@ -29,20 +30,29 @@ var execute = function (body) {
         error: 'an error occurred while executing rpc call',
       });
     }
-    else if(res.statusCode === 409 && res.headers['X-Transmission-Session-Id']) {
+    else if(res.statusCode === 409) {
       log.info('something fishy | %j', res.headers);
-      options.headers['X-Transmission-Session-Id'] = res.headers['X-Transmission-Session-Id'];
-      request(options, function (err, res, body) {
-        if(res.statusCode !== 200) {
-          deffered.reject({
-            error: 'non-200 response code received from transmission rpc client',
-            code: res.statusCode
-          });
-        }
-        else {
-          deffered.resolve(body);
-        }
-      });
+      try {
+        var jsonResponse = parser.toJSON(body);
+        options.headers['X-Transmission-Session-Id'] = jsonResponse.code.split(" ")[1];
+        request(options, function (err, res, body) {
+          if(res.statusCode !== 200) {
+            deffered.reject({
+              error: 'non-200 response code received from transmission rpc client',
+              code: res.statusCode
+            });
+          }
+          else {
+            deffered.resolve(body);
+          }
+        });
+      } catch (err) {
+        log.error('cannot parse xml body to json. error: %j', err);
+        deffered.reject({
+          error: 'cannot parse xml body to json',
+          code: res.statusCode
+        });
+      }
     }
     else if(res.statusCode === 200) {
       deffered.resolve(body);
