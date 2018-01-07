@@ -28,10 +28,9 @@ var execute = function (body) {
       deffered.reject({
         error: 'an error occurred while executing rpc call',
       });
-      return;
     }
     else if(res.statusCode === 409 && res.headers['X-Transmission-Session-Id']) {
-      log.info('%j', res.headers.toString());
+      log.info('something fishy | %j', res.headers);
       options.headers['X-Transmission-Session-Id'] = res.headers['X-Transmission-Session-Id'];
       request(options, function (err, res, body) {
         if(res.statusCode !== 200) {
@@ -39,11 +38,9 @@ var execute = function (body) {
             error: 'non-200 response code received from transmission rpc client',
             code: res.statusCode
           });
-          return;
         }
         else {
           deffered.resolve(body);
-          return;
         }
       });
     }
@@ -51,7 +48,7 @@ var execute = function (body) {
       deffered.resolve(body);
     }
     else {
-      log.info('%j', res.headers.toString());
+      log.info('something too fishy | %j', res.headers);
       deffered.reject({
         error: 'non-200 response code received from transmission rpc client',
         code: res.statusCode
