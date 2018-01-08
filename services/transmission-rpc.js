@@ -30,29 +30,22 @@ var execute = function (body) {
         error: 'an error occurred while executing rpc call',
       });
     }
-    else if(res.statusCode === 409) {
+    else if(res.statusCode === 409 && body && body.indexOf('X-Transmission-Session-Id') >= 0) {
       log.info('something fishy | %j', res.headers);
-      try {
-        var jsonResponse = parser.toJSON(body);
-        options.headers['X-Transmission-Session-Id'] = jsonResponse.code.split(" ")[1];
-        request(options, function (err, res, body) {
-          if(res.statusCode !== 200) {
-            deffered.reject({
-              error: 'non-200 response code received from transmission rpc client',
-              code: res.statusCode
-            });
-          }
-          else {
-            deffered.resolve(body);
-          }
-        });
-      } catch (err) {
-        log.error('cannot parse xml body to json. error: %j', err);
-        deffered.reject({
-          error: 'cannot parse xml body to json',
-          code: res.statusCode
-        });
-      }
+      var code = body.match('X-Transmission-Session-Id: [a-zA-Z0-9]+');
+      var sessionId = code.toString().split(' ')[1];
+      options.headers['X-Transmission-Session-Id'] = sessionId;
+      request(options, function (err, res, body) {
+        if(res.statusCode !== 200) {
+          deffered.reject({
+            error: 'non-200 response code received from transmission rpc client',
+            code: res.statusCode
+          });
+        }
+        else {
+          deffered.resolve(body);
+        }
+      });
     }
     else if(res.statusCode === 200) {
       deffered.resolve(body);
