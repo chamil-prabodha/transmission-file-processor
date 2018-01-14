@@ -23,6 +23,7 @@
           $scope.fileListResponse.count = files.length;
         }
         else {
+          var newFiles = [];
           files.map(function (file) {
             var fileExists = false;
             $scope.fileListResponse.data.map(function (existingFile) {
@@ -31,7 +32,7 @@
                 if(file.fileId !== existingFile.id)
                   existingFile.fileId = file.fileId;
                 if(file.fileName !== existingFile.fileName)
-                  existingFile.name = file.name;
+                  existingFile.fileName = file.fileName;
                 if(file.fileCompletion !== existingFile.fileCompletion)
                   existingFile.fileCompletion = file.fileCompletion;
                 if(file.fileSize !== existingFile.fileSize)
@@ -42,9 +43,30 @@
             });
 
             if(!fileExists) {
-              $scope.fileListResponse.data = files;
-              $scope.fileListResponse.count = files.length;
+              newFiles.push(file);
             }
+          });
+
+          var removingFiles = [];
+          $scope.fileListResponse.data.map(function (existingFile) {
+            var fileExists = false;
+            files.map(function (file) {
+              if(existingFile.hashString === file.hashString)
+                fileExists = true;
+            });
+
+            if(!fileExists) {
+              removingFiles.push(existingFile);
+            }
+          });
+
+          removingFiles.map(function (file) {
+            var index = $scope.fileListResponse.data.indexOf(file);
+            $scope.fileListResponse.data.splice(index,1);
+          });
+
+          newFiles.map(function (file) {
+            $scope.fileListResponse.data.push(file);
           });
         }
       });
@@ -58,7 +80,7 @@
               if(file.fileId !== existingFile.id)
                 existingFile.fileId = file.fileId;
               if(file.fileName !== existingFile.fileName)
-                existingFile.name = file.name;
+                existingFile.fileName = file.fileName;
               if(file.fileCompletion !== existingFile.fileCompletion)
                 existingFile.fileCompletion = file.fileCompletion;
               if(file.fileSize !== existingFile.fileSize)

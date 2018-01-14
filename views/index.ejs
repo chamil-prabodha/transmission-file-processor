@@ -30,8 +30,8 @@
             <td md-cell>{{file.fileId}}</td>
             <td md-cell>{{file.fileName}}</td>
             <td md-cell>{{file.hashString}}</td>
-            <td md-cell>{{((file.fileSize / 1024 / 1024) | number : 2) * 1}}MB</td>
-            <td md-cell>{{file.fileCompletion * 100}}%</td>
+            <td md-cell>{{((file.fileSize / 1024 / 1024) | number : 2)}}MB</td>
+            <td md-cell>{{(file.fileCompletion * 100) | number : 2}}%</td>
             <td md-cell class="col-align-center">
               <md-progress-circular class="circular-progress" layout-align="space-around" md-mode="indeterminate" md-diameter="20px" ng-show="file.inProgress"></md-progress-circular>
               <button ng-show="!file.inProgress" class="archive-btn" ng-click="archiveFile(file)"><img class="archive-img" src="/images/archive.jpg"></button>

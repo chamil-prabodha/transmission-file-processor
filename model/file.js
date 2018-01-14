@@ -7,7 +7,12 @@ var Schema = mongoose.Schema;
 
 var fileSchema = new Schema({
   fileId: Number,
-  fileName: String,
+  fileName: {
+    type : String,
+    unique : true,
+    required : true,
+    dropDups: true
+  },
   hashString: String,
   fileSize: Number,
   fileCompletion: Number,

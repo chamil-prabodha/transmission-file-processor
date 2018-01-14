@@ -44,7 +44,7 @@ var handleFile = function (receivedFile) {
       file.fileName = receivedFile.name;
       file.fileSize = receivedFile.totalSize;
       file.fileCompletion = receivedFile.percentDone;
-      file.fileId = file.id;
+      file.fileId = receivedFile.id;
       file.save(function (error, savedFile) {
         if (error) {
           log.error('cannot create new file in database. error: %s',
@@ -79,7 +79,7 @@ var handleFiles = function (receivedFiles) {
 var updateIfExist = function (receivedFiles) {
   receivedFiles.map(function (file) {
     handleFile(file).catch(function (error) {
-      throw error;
+      log.info('%s', error);
     });
   });
 };
