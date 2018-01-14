@@ -150,7 +150,7 @@ var updateArchiveStatus = function (hashString, status) {
 
 var setDownloadLink = function (file) {
   var deferred = q.defer();
-  var downloadLink = global.appConfig.server.downloadDir + file.fileName +
+  var downloadLink = global.appConfig.server.host + global.appConfig.transmission.downloadDir + file.fileName +
           global.appConfig.server.archiveFormat;
   file.downloadLink = downloadLink;
   file.save(function (error, savedFile) {
