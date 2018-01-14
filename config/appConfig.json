@@ -2,7 +2,8 @@
   "server": {
     "port": 8000,
     "archiveDir": "/home/chamilp/Projects/personal/transmission-file-processor/",
-    "archiveFormat": ".tar.gz"
+    "archiveFormat": ".tar.gz",
+    "downloadDir":"/home/chamilp/Projects/personal/transmission-file-processor/"
   },
   "transmission": {
     "url": "http://198.199.69.32:9090/transmission/rpc/",

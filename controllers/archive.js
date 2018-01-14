@@ -9,7 +9,7 @@ var archive = function (filename) {
   var deferred = q.defer();
   var command = 'tar -zcvf '+
       global.appConfig.server.archiveDir + filename + global.appConfig.server.archiveFormat + ' ' +
-      global.appConfig.transmission.downloadDir + filename;
+      global.appConfig.server.downloadDir + filename;
   var child = exec(command, function (error, stdout, stderr) {
     if(error) {
       deferred.reject(error);
