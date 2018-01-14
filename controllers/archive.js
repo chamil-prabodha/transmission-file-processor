@@ -8,9 +8,9 @@ var q = require('q');
 var archive = function (filename) {
   var deferred = q.defer();
   var command = 'tar -zcvf '+
-      global.appConfig.server.archiveDir + filename + global.appConfig.server.archiveFormat + ' ' +
+      global.appConfig.server.archiveDir + filename.replace(/(\s+)/g, '\\$1') + global.appConfig.server.archiveFormat + ' ' +
       global.appConfig.server.downloadDir + filename;
-  var child = exec(command.replace(/(\s+)/g, '\\$1'), function (error, stdout, stderr) {
+  var child = exec(command, function (error, stdout, stderr) {
     if(error) {
       deferred.reject(error);
       return;
