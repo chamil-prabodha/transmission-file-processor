@@ -1,8 +1,20 @@
 {
+  "server": {
+    "port": 8000,
+    "archiveDir": "/home/chamilp/Projects/personal/transmission-file-processor/",
+    "archiveFormat": ".tar.gz"
+  },
   "transmission": {
-    "url": "http://localhost:9091/transmission/rpc/",
+    "url": "http://198.199.69.32:9090/transmission/rpc/",
     "username": "transmission",
-    "password": "transmission"
-
+    "password": "transmission",
+    "downloadDir": "/home/chamilp/Projects/personal/transmission-file-processor/"
+  },
+  "database": {
+    "connectionString": "mongodb://localhost/tf_processor"
+  },
+  "daemon": {
+    "cronString": "*/1 * * * * *",
+    "enabled": true
   }
 }

@@ -1,11 +1,51 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="tfpApp">
   <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <%include partials/header.ejs%>
   </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+  <body ng-controller="mainController">
+    <!--<h1><%= title %></h1>-->
+    <!--<p>Welcome to <%= title %></p>-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">{{appId}}</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </nav>
+    <div>
+      <md-table-container>
+        <table md-table multiple ng-model="selected" md-progress="promise">
+          <thead md-head>
+          <tr md-row>
+            <th md-column><span>Id</span></th>
+            <th md-column><span>File Name</span></th>
+            <th md-column>Hash String</th>
+            <th md-column>Total Size</th>
+            <th md-column>Completion</th>
+            <th md-column class="col-align-center">Archive</th>
+          </tr>
+          </thead>
+          <tbody md-body>
+          <tr md-row ng-repeat="file in fileListResponse.data">
+            <td md-cell>{{file.fileId}}</td>
+            <td md-cell>{{file.fileName}}</td>
+            <td md-cell>{{file.hashString}}</td>
+            <td md-cell>{{((file.fileSize / 1024 / 1024) | number : 2) * 1}}MB</td>
+            <td md-cell>{{file.fileCompletion * 100}}%</td>
+            <td md-cell class="col-align-center">
+              <md-progress-circular class="circular-progress" layout-align="space-around" md-mode="indeterminate" md-diameter="20px" ng-show="file.inProgress"></md-progress-circular>
+              <button ng-show="!file.inProgress" class="archive-btn" ng-click="archiveFile(file)"><img class="archive-img" src="/images/archive.jpg"></button>
+              <a class="archive-btn" ng-show="file.downloadLink && !file.inProgress" ng-href="{{file.downloadLink}}"><img class="archive-img" src="/images/download.png"></a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </md-table-container>
+
+      <md-table-pagination md-limit="fileGridConfig.limit" md-limit-options="pagination" md-page="fileGridConfig.page"
+                           md-total="{{fileListResponse.count}}" md-on-paginate="getFileList"
+                           md-page-select></md-table-pagination>
+    </div>
+  <%include partials/bodyScripts.ejs%>
   </body>
 </html>

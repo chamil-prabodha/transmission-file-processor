@@ -4,6 +4,9 @@ var favicon = require('serve-favicon');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var log = require('./logger');
+var config = require('./util/config');
+
+config.getConfig();
 
 var index = require('./routes/index');
 var transmission = require('./routes/transmission');
@@ -20,6 +23,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'bower_components')));
+app.use(express.static(path.join(__dirname, 'frontend')));
 
 app.use('/', requestLogger, index);
 app.use('/transmission', transmission);

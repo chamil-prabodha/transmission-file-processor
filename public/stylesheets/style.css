@@ -6,3 +6,24 @@ body {
 a {
   color: #00B7FF;
 }
+
+.archive-btn {
+  background: no-repeat;
+  width: auto;
+  height: auto;
+  border : none;
+  color : transparent;
+}
+
+.archive-img {
+  width: 30px;
+  height: auto;
+}
+
+.col-align-center {
+  text-align: center !important;
+}
+
+.circular-progress {
+  left: 50% !important;
+}
