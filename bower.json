@@ -1,0 +1,29 @@
+{
+  "name": "transmission-file-processor",
+  "description": "Transmission File Processor",
+  "main": "",
+  "authors": [
+    "chamilp <chamil.prabodha@trycake.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "transmission"
+  ],
+  "homepage": "https://github.com/chamil-prabodha/transmission-file-processor",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.6.8",
+    "jquery": "^3.2.1",
+    "angular-route": "^1.6.8",
+    "angular-material-data-table": "^0.10.10",
+    "socket.io-client": "^2.0.4",
+    "angular-toastr": "^2.1.1"
+  }
+}
