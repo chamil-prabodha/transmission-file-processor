@@ -16,7 +16,7 @@ var getTorrents = function () {
   };
   transmissionRpc.execute(data)
   .then(function (data) {
-    log.info('successfully retrieved torrents: %j', data);
+    log.debug('successfully retrieved torrents: %j', data);
     deffered.resolve(data);
   })
   .catch(function (error) {

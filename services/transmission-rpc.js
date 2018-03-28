@@ -30,7 +30,6 @@ var execute = function (body) {
       });
     }
     else if(res.statusCode === 409 && res.headers['x-transmission-session-id']) {
-      log.info('something fishy | %j', res.headers);
       var code = body.match('X-Transmission-Session-Id: [a-zA-Z0-9]+');
       var sessionId = res.headers['x-transmission-session-id'];
       options.headers['X-Transmission-Session-Id'] = sessionId;
@@ -58,7 +57,6 @@ var execute = function (body) {
       deffered.resolve(body);
     }
     else {
-      log.info('something too fishy | %j', body.toString());
       deffered.reject({
         error: 'non-200 response code received from transmission rpc client',
         code: res.statusCode

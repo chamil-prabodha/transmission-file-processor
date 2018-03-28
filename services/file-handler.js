@@ -33,7 +33,7 @@ var handleFile = function (receivedFile) {
           deferred.reject(error);
           return;
         }
-        log.info('saved new file %s', savedFile.toString());
+        log.debug('saved new file %s', savedFile.toString());
         deferred.resolve(savedFile);
       });
     }
@@ -52,7 +52,7 @@ var handleFile = function (receivedFile) {
           deferred.reject(error);
           return;
         }
-        log.info('updated file %s', savedFile.toString());
+        log.debug('updated file %s', savedFile.toString());
         deferred.resolve(savedFile);
       });
     }
@@ -79,7 +79,7 @@ var handleFiles = function (receivedFiles) {
 var updateIfExist = function (receivedFiles) {
   receivedFiles.map(function (file) {
     handleFile(file).catch(function (error) {
-      log.info('%s', error);
+      log.error('error occurred while updating files %s', error);
     });
   });
 };
@@ -101,7 +101,7 @@ var removeIfNotFound = function (receivedFiles) {
             log.error('unable to remove file %j', file.name);
             return;
           }
-          log.info('removed file %s', removedFile.fileName);
+          log.debug('removed file %s', removedFile.fileName);
         })
       })
     }

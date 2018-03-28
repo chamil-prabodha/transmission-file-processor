@@ -25,7 +25,7 @@ var init = function (server) {
 
   if(global.appConfig.daemon.enabled) {
     schedule.scheduleJob('daemon', global.appConfig.daemon.cronString, function () {
-      log.info('daemon retrieving torrents from transmission remote');
+      log.debug('daemon retrieving torrents from transmission remote');
       transmissionController.getTorrents()
       .then(function (data) {
         return fileHandler.handleFiles(data.arguments.torrents);
