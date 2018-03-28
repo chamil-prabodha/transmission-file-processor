@@ -21,7 +21,7 @@ const options = {
 var execute = function (body) {
   var deffered = Q.defer();
   options.json = body;
-  log.info('sending requst: %j', options);
+  log.debug('sending requst: %j', options);
   request(options, function (err, res, body) {
     if (err) {
       log.error('an error occurred while sending request. %j', err.toString());
