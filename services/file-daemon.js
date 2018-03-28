@@ -17,7 +17,8 @@ var init = function (server) {
   socket = socketio(server);
   conn.connect(socket);
   socket.on('connection', function (sock) {
-    log.info('received connection: %j', sock);
+    var address = sock.handshake.address;
+    log.info('received connection: %s : %s', address.address, address.port);
     sock.on('disconnect', function () {
       log.info('disconnected: %j', sock);
     });
