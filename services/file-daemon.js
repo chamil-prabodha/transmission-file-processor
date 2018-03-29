@@ -19,7 +19,7 @@ var init = function (server) {
   socket.on('connection', function (sock) {
     log.info('received connection: %s', sock.request.connection.remoteAddress);
     sock.on('disconnect', function () {
-      log.info('disconnected: %j', sock);
+      log.info('disconnected: %j', sock.request.connection.remoteAddress);
     });
   });
 
